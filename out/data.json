@@ -1,0 +1,701 @@
+{
+    "project": {},
+    "files": {
+        "KMapGenerator.js": {
+            "name": "KMapGenerator.js",
+            "modules": {
+                "KMapGenerator": 1
+            },
+            "classes": {
+                "KMap": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "KMapGenerator": {
+            "name": "KMapGenerator",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "KMap": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "module",
+            "file": "KMapGenerator.js",
+            "line": 19,
+            "description": "Karnaugh Map Generator.\n\nBy Antonio García Díaz.\n\nUniversité Libre de Bruxelles 2016-2017.\n\nThis module was created as a javascript web application to automatically generate K-Map exercices and their solutions.\nIt uses a method (pseudo-ESPRESSO) based on the ESPRESSO algorithm to calculate an optimal cover of the K-Map using n-cubes, and display the solution linked to said covering.\nThe application is meant to be used in conjunction with KarnaughMap.html, which provides an HTML layout to showcase the application."
+        }
+    },
+    "classes": {
+        "KMap": {
+            "name": "KMap",
+            "shortname": "KMap",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "KMapGenerator",
+            "namespace": "",
+            "file": "KMapGenerator.js",
+            "line": 19,
+            "description": "A class meant to represent a Karnaugh Map (KMap) through a matrix (array of arrays).\nIt also contains information about an optimal cover of said map, which is dynamically calculated every time it is modified.\n\nIn addition, the class possesses the methods and static properties needed to calculate such a cover, and display the K-Map as an interactive HTML interface.\nThe cover is calculated using a pseudo-ESPRESSO method (based on the ESPRESSO algorithm)."
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "KMapGenerator.js",
+            "line": 34,
+            "description": "Names used for each possible variable.",
+            "itemtype": "property",
+            "name": "varNames",
+            "type": "{Array}",
+            "default": "[\"A\",\"B\",\"C\",\"D\",\"E\"]",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 42,
+            "description": "Number of \"levels\" of the K-Map for each numVar (KLvl[0] and KLvl[1] are unused).\nThere is only one level unless we use 5 variables. Then the K-Map becomes \"3D\", and there are two levels.",
+            "itemtype": "property",
+            "name": "KLvl",
+            "type": "{Array}",
+            "default": "[0,1,1,1,1,2]",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 51,
+            "description": "Width of the K-Map for each numVar (KWid[0] and KWid[1] are unused).",
+            "itemtype": "property",
+            "name": "KWid",
+            "type": "{Array}",
+            "default": "[0,2,2,4,4,4]",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 59,
+            "description": "Height of K-Map for each numVar (KHei[0] and KHei[1] are unused).",
+            "itemtype": "property",
+            "name": "KHei",
+            "type": "{Array}",
+            "default": "[0,1,2,2,4,4]",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 67,
+            "description": "Number of variables written horizontally for each numVar.",
+            "itemtype": "property",
+            "name": "KVarX",
+            "type": "{Array}",
+            "default": "[0,1,1,2,2,2]",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 75,
+            "description": "Number of variables written vertically for each numVar",
+            "itemtype": "property",
+            "name": "KVarY",
+            "type": "{Array}",
+            "default": "[0,0,1,1,2,2]",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 83,
+            "description": "The order of bits as represented in a K-Map (00, 01, 11, 10).",
+            "itemtype": "property",
+            "name": "bitOrd",
+            "type": "{Array}",
+            "default": "[0,1,3,2,4,5,7,6]",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 91,
+            "description": "A string specifying the name of the \"normal\" color for spaces in the K-Map.",
+            "itemtype": "property",
+            "name": "normalColor",
+            "type": "{String}",
+            "default": "\"white\"",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 99,
+            "description": "A string specifying the name of the color used for selected spaces in the K-Map.",
+            "itemtype": "property",
+            "name": "selectColor",
+            "type": "{String}",
+            "default": "\"yellow\"",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 114,
+            "description": "The number of logic variables for the K-Map.",
+            "itemtype": "property",
+            "name": "numVar",
+            "type": "{Integer}",
+            "default": "4",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 122,
+            "description": "Wether the K-Map may have \"don't care\" symbols or not.",
+            "itemtype": "property",
+            "name": "allowDC",
+            "type": "{Boolean}",
+            "default": "false",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 130,
+            "description": "The content of the K-Map itself, as an array of arrays.",
+            "itemtype": "property",
+            "name": "KMap",
+            "type": "{Array}",
+            "default": "[]",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 138,
+            "description": "The list of covered spaces in the K-Map, as an array of coordinates.",
+            "itemtype": "property",
+            "name": "coverList",
+            "type": "{Array}",
+            "default": "[]",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 146,
+            "description": "The list of n-cubes that form an optimal cover of the K-Map, as an array of arrays of coordinates.",
+            "itemtype": "property",
+            "name": "nCubeList",
+            "type": "{Array}",
+            "default": "[]",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 164,
+            "description": "From integers val and b, produces a string that expresses val as a b-bit binary value.",
+            "itemtype": "method",
+            "name": "toBinString",
+            "params": [
+                {
+                    "name": "val",
+                    "description": "The integer value to be converted to binary.",
+                    "type": "Integer"
+                },
+                {
+                    "name": "b",
+                    "description": "The maximum number of binary bits to be retained in val.",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "Returns a string expressing val as a binary number of less than b bits.",
+                "type": "String"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 181,
+            "description": "From an integer (representing a boolean as a binary cypher, or a don't care as anything else),\nproduces a corresponding string. Said string contains the same binary cypher if boolean,\nor \"_\" if don't care.",
+            "itemtype": "method",
+            "name": "boolToBin",
+            "params": [
+                {
+                    "name": "bool",
+                    "description": "A value that represents a boolean, or don't care.",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "Returns \"1\" if bool = 1 (true), \"0\" if bool = 0 (false), and \"_\" otherwise (don't care).",
+                "type": "String"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 202,
+            "description": "Checks wether a given n-cube can be accepted by the K-Map.\n\nAn n-cube is accepted only if it contains no 0 values, and it contains at least one 1 value.\nIndeed, from the logic of favorising the largest possible n-cubes, it follows that a cube with\nno 0 values is accepted, even if most other values are \"don't cares\", as long as it has a single\n1 value at least.",
+            "itemtype": "method",
+            "name": "checkCube",
+            "params": [
+                {
+                    "name": "coords",
+                    "description": "An array containing the coordinates of the n-cube's first (top-left-front) space.",
+                    "type": "Array"
+                },
+                {
+                    "name": "sizes",
+                    "description": "An array containing the dimensions of the n-cube (in spaces).",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Wether the n-cube is accepted (contains no 0 values at least one 1 value).",
+                "type": "Bool"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 228,
+            "description": "Checks wether a given n-cube can be accepted by the K-Map.\n\nAn n-cube is accepted only if it contains no 0 values, and it contains at least one 1 value.\nIndeed, from the logic of favorising the largest possible n-cubes, it follows that a cube with\nno 0 values is accepted, even if most other values are \"don't cares\", as long as it has a single\n1 value at least.",
+            "itemtype": "method",
+            "name": "makeCube",
+            "params": [
+                {
+                    "name": "coords",
+                    "description": "An array containing the coordinates of the n-cube's first (top-left-front) space.",
+                    "type": "Array"
+                },
+                {
+                    "name": "sizes",
+                    "description": "An array containing the dimensions of the n-cube (in spaces).",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "An array of spaces representing the n-cube's portion of the K-Map.",
+                "type": "Array"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 252,
+            "description": "Within an n-cube array, eliminates any n-cubes whose spaces are entirely covered by other n-cubes in the array.",
+            "itemtype": "method",
+            "name": "checkForCollisions",
+            "params": [
+                {
+                    "name": "nCubeArray",
+                    "description": "An array of arrays, each representing the portion of the K-Map covered by an n-cube.",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Returns a new array containing the maximal n-cubes from the original, those that were not contained in another n-cube.",
+                "type": "Array"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 282,
+            "description": "Checks if an n-cube is contained in another. Returns true if nCube1 is contained in nCube2.\n\nThis function  be used in a larger context, with nCube1 and nCube2 being any two lists of spaces from the K-Map (and not necessarily n-cubes).\nThe usage is then the same, to check if one contains the other.",
+            "itemtype": "method",
+            "name": "isContainedIn",
+            "params": [
+                {
+                    "name": "nCube1",
+                    "description": "An array of spaces, usually representing an n-cube's portion of the K-Map.",
+                    "type": "Array"
+                },
+                {
+                    "name": "nCube2",
+                    "description": "Another array of spaces, usually representing another n-cube's portion of the K-Map.",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Returns true if the spaces in nCube1 are part of the spaces in nCube2, false otherwise.",
+                "type": "Bool"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 308,
+            "description": "Returns true if a given space can already be found in a given list of (covered) spaces.\nUsed to test wether a space that is detected as covered has been already added to the \"covered spaces\" list or not.",
+            "itemtype": "method",
+            "name": "alreadyCovered",
+            "params": [
+                {
+                    "name": "space",
+                    "description": "The coordinates of a space in the K-Map, that has been detected as covered.",
+                    "type": "Array"
+                },
+                {
+                    "name": "cover",
+                    "description": "An array of space coordinates. Usually the list of covered spaces, still being built.",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Wether the space is already in the list of covered spaces or not.",
+                "type": "Bool"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 326,
+            "description": "Generates a list of covered spaces in the K-Map from a list of n-cubes (representing a cover of said map).",
+            "itemtype": "method",
+            "name": "getCoverList",
+            "params": [
+                {
+                    "name": "nCubeArray",
+                    "description": "An array of arrays, each representing an n-cube's portion of the K-Map.",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "An array representing a cover of the K-Map, containing the coordinates of covered spaces.",
+                "type": "Array"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 343,
+            "description": "Checks if a list of covered spaces contains all of the 1 values in the K-Map.",
+            "itemtype": "method",
+            "name": "coversAll1",
+            "params": [
+                {
+                    "name": "cover",
+                    "description": "An array of spaces in the K-Map.",
+                    "type": "Array"
+                }
+            ],
+            "return": {
+                "description": "Returns false if at least one 1 value falls outside the array of spaces, true otherwise.",
+                "type": "Bool"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 361,
+            "description": "The \"expand\" step of the pseudo-ESPRESSO algorithm.\n\nEach new n-cube is expanded towards every direction (width, height, and square) until it cannot be expanded anymore,\ncreating various candidate \"expanded\" n-cubes. These cubes are then added to the n-cube list.\nFinally, if any expanded n-cubes is contained within another expanded cube, it is removed from the list.\n\nIn the 5-variable case, n-cubes that cover both levels of depth (E and notE), are treated separately from other cubes,\nalthough using the same tree-choice layout for their expansion. This is because, by using that choice layout, it is possible\nto find a 1-1 association of every case of 1-level-deep cube with a distinct case of 2-levels-deep cube.",
+            "itemtype": "method",
+            "name": "EspressoExpand",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 483,
+            "description": "The \"irredundant cover\" step of the pseudo-ESPRESSO algorithm.\n\nThe number of n-cubes in the cover is reduced to a minimum, eliminating any redundant cubes.\nThis is achieved by itterating over the list of n-cubes until no more cubes can be removed.\n\nEach cube is first temporally eliminated from the list, to check if the previous cover (with the cube)\nis contained in the new one (without the cube).\nSince the opposite is always true, this would mean that the covers are identical.\n\nIn case the covers are in fact not identical, and if \"don't care\" values are possible,\nit is instead checked wether all of the spaces with a 1 value are covered by the new cover.\n\nIf any of these conditions apply, the n-cube is considered redundant and definitively removed from the list.\nOtherwise, if the covers are not identical (and if 1 values are left out), the n-cube is considered essential\nand is retained in the list.",
+            "itemtype": "method",
+            "name": "EspressoIrredundantCover",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 531,
+            "description": "Starts the pseudo-ESPRESSO algorithm for the current state of the K-Map.\n\nResets the lists of n-cubes and of covered spaces, and calls the functions for each step of the algorithm.",
+            "itemtype": "method",
+            "name": "EspressoSolve",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 550,
+            "description": "Resets and rebuilds the KMap matrix and its attributes, with a given number of logic variables.",
+            "itemtype": "method",
+            "name": "initKMap",
+            "params": [
+                {
+                    "name": "nVar",
+                    "description": "The number of variables for the map.",
+                    "type": "Integer"
+                }
+            ],
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 580,
+            "description": "Simply resets and redraws the K-Map, using the current number of variables.",
+            "itemtype": "method",
+            "name": "resetKMap",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 590,
+            "description": "Changes the number of variables of the K-Map, resetting it in the process.",
+            "itemtype": "method",
+            "name": "changeNumVar",
+            "params": [
+                {
+                    "name": "Num",
+                    "description": "The new number of variables for the map.",
+                    "type": "Integer"
+                }
+            ],
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 608,
+            "description": "Switches wether the K-Map allows for \"don't care\" symbols or not, resetting it in the process.",
+            "itemtype": "method",
+            "name": "switchDontCare",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 624,
+            "description": "Modifies an entry in the K-Map, switching its value attribute (an integer)\nbetween 0 (false), 1 (true), and 2 (don't care).",
+            "itemtype": "method",
+            "name": "modifyKMEntry",
+            "params": [
+                {
+                    "name": "entry",
+                    "description": "A reference to an entry of the K-Map.",
+                    "type": "Variable"
+                }
+            ],
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 644,
+            "description": "Sets the color for each space in the K-Map's HTML representation back to its normal value.",
+            "itemtype": "method",
+            "name": "setAllToNormalColor",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 658,
+            "description": "Sets the color of a group of spaces in the K-Map's HTML representation to a given color.",
+            "itemtype": "method",
+            "name": "setColor",
+            "params": [
+                {
+                    "name": "nCube",
+                    "description": "An array of coordinates corresponding to spaces in the K-Map, usually an n-cube.",
+                    "type": "Array"
+                },
+                {
+                    "name": "color",
+                    "description": "A string specifying the color that the set of spaces will take.",
+                    "type": "String"
+                }
+            ],
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 671,
+            "description": "Redraws the HTML display of the KMap and its solution.",
+            "itemtype": "method",
+            "name": "redraw",
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 684,
+            "description": "Generates a new HTML code for the K-Map. The map is displayed as a matrix of clickable buttons.",
+            "itemtype": "method",
+            "name": "generateKMapHTML",
+            "return": {
+                "description": "The new HTML code for the K-Map.",
+                "type": "String"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 746,
+            "description": "Returns, for a given n-cube, its corresponding term in the cover's logic function (HTML version).\nUses the binary strings related to each space covered by the n-cube, and compares them,\nto know which logic variables are concerned, and in which state they are accepted.\n\nIf the mouse is hovered on the term, its corresponding n-cube will light up on the K-Map.",
+            "itemtype": "method",
+            "name": "getFunctionHTML",
+            "params": [
+                {
+                    "name": "nCube",
+                    "description": "An array representing an n-cube's portion of the K-Map.",
+                    "type": "Array"
+                },
+                {
+                    "name": "cubeId",
+                    "description": "The place of the n-cube in the list of cubes, used to generate interactive HTML code.",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "A string representing a term in the logic function, related to the n-cube.",
+                "type": "String"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 796,
+            "description": "Generates a new HTML code for the K-Map's solution (a logic function that expresses its cover by the n-cubes).",
+            "itemtype": "method",
+            "name": "generateSolutionHTML",
+            "return": {
+                "description": "The new HTML code to show the cover's logic function.",
+                "type": "String"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 836,
+            "description": "Writes a string of LaTeX code to use as the document's header.\nThis sets the proper LaTeX configuration to display the K-Map.",
+            "itemtype": "method",
+            "name": "writeDocHeader",
+            "return": {
+                "description": "The LaTeX code for displaying the n-cubes.",
+                "type": "String"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 875,
+            "description": "Returns, for a given n-cube, its corresponding term in the cover's logic function (text version).\nUses the binary strings related to each space covered by the n-cube, and compares them,\nto know which logic variables are concerned, and in which state they are accepted.",
+            "itemtype": "method",
+            "name": "getFunctionText",
+            "params": [
+                {
+                    "name": "nCube",
+                    "description": "An array representing an n-cube's portion of the K-Map.",
+                    "type": "Array"
+                },
+                {
+                    "name": "cubeId",
+                    "description": "The place of the n-cube in the list of cubes, used to generate interactive HTML code.",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "A string representing a term in the logic function, related to the n-cube.",
+                "type": "String"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 910,
+            "description": "Writes the K-Map's solution (a logic function that expresses its cover by the n-cubes) as a string of text.",
+            "itemtype": "method",
+            "name": "writeLogicFunction",
+            "return": {
+                "description": "The cover's logic function as a string of text.",
+                "type": "String"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 931,
+            "description": "Finds, for an n-cube, the lowest or highest value for a space's for width, length, or depth, depending on the parameters.",
+            "itemtype": "method",
+            "name": "findExCoord",
+            "params": [
+                {
+                    "name": "nCube",
+                    "description": "An array of spaces, representing an n-cube's portion of the K-Map.",
+                    "type": "Array"
+                },
+                {
+                    "name": "ex",
+                    "description": "The kind of extreme requested. Set to 0 for lowest, 1 for highest.",
+                    "type": "Integer"
+                },
+                {
+                    "name": "coord",
+                    "description": "The kind of coordinate. Set to 0 for width, 1 for height, 2 for depth.",
+                    "type": "Integer"
+                }
+            ],
+            "return": {
+                "description": "The lowest or highest such coordinate found in in the the n-cube.",
+                "type": "Integer"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 954,
+            "description": "Writes a string of LaTeX code to display the n-cubes in the K-Map.",
+            "itemtype": "method",
+            "name": "writeNCubes",
+            "return": {
+                "description": "The LaTeX code for displaying the n-cubes.",
+                "type": "String"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        },
+        {
+            "file": "KMapGenerator.js",
+            "line": 995,
+            "description": "Generates a LaTeX document containing a representation of the K-Map.",
+            "itemtype": "method",
+            "name": "generateLaTeXCode",
+            "return": {
+                "description": "The LaTeX code that represents the K-Map.",
+                "type": "String"
+            },
+            "class": "KMap",
+            "module": "KMapGenerator"
+        }
+    ],
+    "warnings": []
+}
